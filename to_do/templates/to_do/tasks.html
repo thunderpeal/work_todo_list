@@ -1,0 +1,53 @@
+{% extends 'to_do/base.html' %}
+{% load static %}
+{% block content %}
+<div style="margin-bottom: 5px"><h4>{{ person }}</h4></div>
+<div style="margin-bottom: 20px"><h4>{{ annotation }}</h4></div>
+<p>
+    <button class="btn btn-primary btn-sm" onclick="location.href='{% url 'task_create' %}'">Создать задачу</button>
+</p>
+{% if tasks %}
+<table class = "table">
+        <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Описание
+            </th>
+            <th>
+                Дедлайн
+            </th>
+            <th>
+                Дата создания
+            </th>
+            <th>
+                Ответственный сотрудник
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr> {% for todoitem in tasks %}
+
+            <td style="vertical-align: middle;">{{ todoitem.title }}</td>
+            <td style="vertical-align: middle;">{{ todoitem.description }}</td>
+            <td style="vertical-align: middle;">{{ todoitem.due_date }}</td>
+            <td style="vertical-align: middle;">{{ todoitem.created_date }}</td>
+            <td style="vertical-align: middle;">{{ todoitem.todo_list_employee.first_name }} {{ todoitem.todo_list_employee.last_name }}</td>
+            <td style="padding: 0 8px 0 8px"><a style='text-decoration:none; font-size: 30px' href="{% url 'set_done' todoitem.id %}">{% if todoitem.done%}&#10003;{% else %}&#9634;{% endif %}</a></td>
+            {% if user.is_staff %}
+            <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'task_delete' todoitem.id %}'">Удалить</button>
+        </td>
+        <td> <button class="btn btn-primary btn-sm"onclick="location.href='{% url 'task_change' todoitem.id %}'">Изменить</button>
+        </td>{% endif %}
+        </tr>
+        </tbody>
+        {% empty %}
+        <li>No tasks yet.</li>{% endfor %}
+</table>
+{% else %}
+<p>В этой секции задач еще нет, приходите позже</p>
+{% endif %}
+{% endblock content %}

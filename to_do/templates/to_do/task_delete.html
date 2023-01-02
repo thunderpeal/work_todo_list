@@ -1,0 +1,11 @@
+{% extends 'to_do/base.html' %}
+
+{% block content %}
+<form method="post">{% csrf_token %}
+    <h5>Вы действительно хотите удалить задачу "{{ object.title }}"?</h5>
+    <button class="btn btn-secondary btn-sm" type="submit" value="Confirm">Удалить</button>
+</form>
+<h5>
+<button style="margin-top: 15px" class="btn btn-primary btn-sm" onclick="location.href='{% url 'tasks_per_e' user.id %}">Назад</button>
+</h5>
+{% endblock content %}

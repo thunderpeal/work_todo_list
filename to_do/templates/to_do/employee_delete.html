@@ -1,0 +1,12 @@
+{% extends 'to_do/base.html' %}
+
+{% block content %}
+<form method="post">{% csrf_token %}
+    <h5>Вы действительно хотите удалить сотрудника {{ object.last_name }} {{ object.first_name }}?</h5>
+    <div style="display: flex; justify-content: space-between; margin-top: 20px">
+
+        <button class="btn btn-secondary btn-sm" type="submit" value="Confirm">Удалить</button>
+    </div>
+</form>
+<button style="margin-top: 15px" class="btn btn-primary btn-sm" onclick="location.href='{% url 'employees' %}'">Назад</button>
+{% endblock content %}

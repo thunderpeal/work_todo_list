@@ -1,0 +1,51 @@
+{% extends 'to_do/base.html' %}
+
+    {% block content %}
+<style>
+h2, h3 {
+  text-align: center;
+}
+</style>
+<h2>Добро пожаловать в To Do App!</h2>
+<h3>Осталось задач на команду: {{ tasks_total }}</h3>
+<p>
+    <button class="btn btn-primary btn-sm" onclick="location.href='{% url 'task_create' %}'">Создать задачу</button>
+</p>
+<table style="width: 1200px" class = "table">
+        <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Описание
+            </th>
+            <th>
+                Дедлайн
+            </th>
+            <th>
+                Дата создания
+            </th>
+            <th>
+                Ответственный сотрудник
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>{% for todoitem in tasks %}
+        <tr>
+            <td>{{ todoitem.title }}</td>
+            <td>{{ todoitem.description }}</td>
+            <td>{{ todoitem.due_date }}</td>
+            <td>{{ todoitem.created_date }}</td>
+            <td><a style="text-decoration: none; font-weight: 600; color: #04a1e8" href="{% url 'tasks_per_e' todoitem.todo_list_employee.id %}">{{ todoitem.todo_list_employee.first_name }} {{ todoitem.todo_list_employee.last_name }}</a></td>
+        <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'task_delete' todoitem.id %}'">Удалить</button>
+        </td>
+        <td> <button class="btn btn-primary btn-sm" onclick="location.href='{% url 'task_change' todoitem.id %}'">Изменить</button>
+        </td>
+        </tr>{% empty %}
+        </tbody>
+
+        <li>No tasks yet.</li>{% endfor %}
+</table>
+    {% endblock %}

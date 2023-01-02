@@ -1,0 +1,44 @@
+{% extends 'to_do/base.html' %}
+
+{% block content %}
+
+<div style="margin-bottom: 20px"><h3>{{ annotation }}</h3></div>
+<p>
+    <button class="btn btn-primary btn-sm" onclick="location.href='{% url 'employee_create' %}'">Добавить сотрудника</button>
+</p>
+<ol style="padding-left: 0">
+    {% if employees %}
+    <table class = "table" >
+        <thead>
+        <tr>
+            <th>
+                Имя сотрудника
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+        </thead>
+        <tbody>{% for employee in employees %}
+        <tr>
+        <td style="vertical-align: middle; font-weight: 600">{{ employee.first_name }} {{ employee.last_name }}</td>
+            <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'tasks_per_e' employee.id %}'">Задачи</button>
+        </td>
+            <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'archive_per_e' employee.id %}'">Архив</button>
+        </td>
+        <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'employee_delete' employee.id %}'">Удалить</button>
+        </td>
+        <td> <button class="btn btn-primary btn-sm" onclick="location.href='{% url 'employee_change' employee.id %}'">Изменить</button>
+        </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+    {% else %}
+    <p>No employees yet.</p>
+    {% endif %}
+</ol>
+
+{% endblock content %}

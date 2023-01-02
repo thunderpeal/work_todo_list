@@ -1,0 +1,23 @@
+{% extends 'to_do/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class = "container">
+    <div class="row mx-lg-n5">
+        {% for todoitem in items %}
+            <div class="card" style="width: 18rem;margin: 15px; box-shadow: 2px 3px 4px grey; border-radius: 10px">
+            <div class="card-body">
+                <h5 class="card-title">{{ todoitem.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ todoitem.due_date }}</h6>
+                <p class="card-text">{{ todoitem.description }}</p>
+            </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a style="text-decoration: none; font-weight: 600; color: #04a1e8" href="{% url 'tasks_per_e' todoitem.todo_list_employee.id %}">{{ todoitem.todo_list_employee.first_name }} {{ todoitem.todo_list_employee.last_name }}</a></li>
+                </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
+
